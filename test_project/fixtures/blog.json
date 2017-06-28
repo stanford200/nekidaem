@@ -1,0 +1,10 @@
+[
+  {
+    "model": "blog.Blog",
+    "pk": 1,
+    "fields": {
+      "name": "Blog of first user",
+      "owner": 1
+    }
+  }
+]

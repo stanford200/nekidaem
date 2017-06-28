@@ -1,0 +1,10 @@
+[
+  {
+    "model": "blog.Subscriptions",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "blog": 1
+    }
+  }
+]
