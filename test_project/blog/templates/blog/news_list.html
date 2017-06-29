@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News List</title>
+</head>
+<body>
+
+    <h1><a href="{% url 'blogs' %}">Blogs</a></h1>
+
+    {% if article_list %}
+        <table id="cars" border="1">
+            {% for article in article_list %}
+                <tr>
+                    <td >Name: {{ article.name}}</td>
+                    <td style="padding: 0 30px; max-width: 350px;">Content: {{ article.content }}</td>
+                    <td >Created at: {{ article.creation_time}}</td>
+                    <td><a href="{% url 'article_view' article.id %}" class="see_detail">VIEW</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% if is_paginated %}
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="{% url 'news' %}?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="{% url 'news' %}?page={{ page_obj.next_page_number }}">Next</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% else %}
+        <h3>My news</h3>
+        <p>Nothing found(</p>
+    {% endif %}
+
+</body>
+</html>

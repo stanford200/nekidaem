@@ -29,6 +29,8 @@
                             <a href="{% url 'article_view' article.id %}">VIEW</a>
                             <h3>Title: {{article.name}}</h3>
                             <span>{{ article.content |truncatechars:150  }}</span>
+                            <p>Created at: {{ article.creation_time | date:'m-d-Y H:m:s'}}</p>
+                            <p>Edited at: {{ article.edit_time | date:'m-d-Y H:m:s'  }}</p>
                             </br>
                             {% with blog=article.blog %}
                                 {% if is_sub and request.user.id != owner.id %}

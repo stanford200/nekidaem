@@ -67,3 +67,15 @@ def subscribe(request, pk):
 def unsubscribe(request, pk):
     Subscriptions.objects.filter(blog_id=pk, user=request.user).delete()
     return HttpResponseRedirect(reverse('blog_view', kwargs={'pk': pk}))
+
+
+class NewsListView(ListView):
+    model = Article
+    template_name = 'blog/news_list.html'
+    context_object_name = "article_list"
+    paginate_by = 2
+
+    def get_queryset(self):
+        queryset = super(NewsListView, self).get_queryset()
+        blogs = Subscriptions.objects.filter(user=self.request.user).values('blog_id')[:10000]
+        return queryset.filter(blog_id__in=blogs)

@@ -8,6 +8,10 @@
 </head>
 <body>
 
+{% if request.user.is_authenticated %}
+    <a href="{% url 'news' %}">NEWS</a>
+{% endif %}
+
 {% for blog in blog_list %}
     <div style="border: 1px solid black;">
         <h3>Blog name: <a href="{% url 'blog_view' blog.id %}">{{ blog.name }}</a></h3>
