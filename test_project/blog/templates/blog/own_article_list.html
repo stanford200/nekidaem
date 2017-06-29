@@ -1,0 +1,38 @@
+{% load is_subscribed %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <title>My blog</title>
+</head>
+<body>
+
+    <div style="text-align: center;">
+        <h1><a href="{% url 'blogs' %}">Blogs</a></h1>
+        <h1>Own Articles</h1>
+
+        <a href="{% url 'article_create' %}">ADD NEW ARTICLE</a></br>
+        </br>
+        {% if article_list %}
+                {% with is_sub=article_list.0.blog|is_subscribed:request.user owner=article_list.0.blog.owner %}
+                    {% for article in article_list %}
+                        <div style="padding: 20px; width: 300px; margin: 0 auto; border: 2px solid black;">
+
+                            <a href="{% url 'article_edit' article.id %}">EDIT</a>
+                            <a href="{% url 'article_delete' article.id %}">DELETE</a>
+                            <a href="{% url 'article_view' article.id %}">VIEW</a>
+                            <h3>Title: {{article.name}}</h3>
+                            <span>{{ article.content |truncatechars:150  }}</span>
+                            {% if is_sub and request.user.id != owner.id %}
+                                {% include "blog/unsubscribe_form.html" %}
+                            {% elif request.user != owner %}s
+                                {% include "blog/subscribe_form.html" %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% endwith %}
+        {% endif %}
+    </div>
+
+</body>
+</html>

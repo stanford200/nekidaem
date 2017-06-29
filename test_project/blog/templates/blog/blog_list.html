@@ -1,0 +1,24 @@
+{% load is_subscribed %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs</title>
+</head>
+<body>
+
+{% for blog in blog_list %}
+    <div style="border: 1px solid black;">
+        <h3>Blog name: <a href="{% url 'blog_view' blog.id %}">{{ blog.name }}</a></h3>
+        <h4>Author: {{ blog.owner.username  }}</h4>
+        {% if blog|is_subscribed:request.user  and request.user != blog.owner %}
+            {% include "blog/unsubscribe_form.html" %}
+        {% elif request.user != blog.owner %}
+            {% include "blog/subscribe_form.html" %}
+        {% endif %}
+    </div>
+{% endfor %}
+
+</body>
+</html>
