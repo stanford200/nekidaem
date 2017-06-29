@@ -1,3 +1,5 @@
+{% load is_article_read %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +18,11 @@
                     <td style="padding: 0 30px; max-width: 350px;">Content: {{ article.content }}</td>
                     <td >Created at: {{ article.creation_time}}</td>
                     <td><a href="{% url 'article_view' article.id %}" class="see_detail">VIEW</a></td>
+                    {% if not article|is_article_read:request.user %}
+                        <td><a href="{% url 'mark_article_read' article.id %}" target="_blank">Mark as read</a></td>
+                    {% else %}
+                        <td>Already read</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

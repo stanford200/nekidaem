@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
 from .views import CreateArticleView, UpdateArticleView, DeleteArticleView, ArtticleDetailView,\
-    BlogListView, ArticleListView, subscribe, unsubscribe, NewsListView
+    BlogListView, ArticleListView, subscribe, unsubscribe, NewsListView, mark_article_as_read
 
 
 urlpatterns = [
@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^article/(?P<pk>\d+)/edit', login_required(UpdateArticleView.as_view(), '/accounts/login'), name='article_edit'),
     url(r'^article/(?P<pk>\d+)/delete', login_required(DeleteArticleView.as_view(), '/accounts/login'), name='article_delete'),
     url(r'^article/(?P<pk>\d+)/view', ArtticleDetailView.as_view(), name='article_view'),
+    url(r'^article/(?P<pk>\d+)/read', login_required(mark_article_as_read, 'accounts/login'), name='mark_article_read'),
     url(r'^article/', login_required(CreateArticleView.as_view(), '/accounts/login'), name='article_create'),
 
     url(r'^news/$', login_required(NewsListView.as_view(), '/account/login'), name='news'),

@@ -35,9 +35,21 @@ class Subscriptions(models.Model):
         unique_together = (("user", "blog"),)
 
     user = models.ForeignKey(User)
-    blog= models.ForeignKey(Blog)
+    blog = models.ForeignKey(Blog)
 
     def __str__(self):
         return ' - '.join([self.user.email or self.user.username, self.blog.name])
+
+
+class AlreadyReadArticle(models.Model):
+
+    class Meta:
+        unique_together = (("user", "article"),)
+
+    user = models.ForeignKey(User)
+    article = models.ForeignKey(Article)
+
+    def __str__(self):
+        return ' - '.join([self.user.email or self.user.username, self.article.name])
 
 from .signals import create_blog_for_new_user

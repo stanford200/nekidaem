@@ -1,4 +1,5 @@
-    {% load is_subscribed %}
+{% load is_subscribed %}
+{% load is_article_read %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,6 +36,12 @@
                             {% with blog=article.blog %}
                                 {% if is_sub and request.user.id != owner.id %}
                                     {% include "blog/unsubscribe_form.html" %}
+                                    </br>
+                                    {% if not article|is_article_read:request.user %}
+                                        <td><a href="{% url 'mark_article_read' article.id %}" target="_blank">Mark as read</a></td>
+                                    {% else %}
+                                        <td>Already read</td>
+                                    {% endif %}
                                 {% elif request.user != owner %}
                                     {% include "blog/subscribe_form.html" %}
                                 {% endif %}

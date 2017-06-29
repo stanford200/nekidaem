@@ -1,10 +1,10 @@
 from django.views.generic.list import ListView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import DetailView
 
-from .models import Article, Blog, Subscriptions
+from .models import Article, Blog, Subscriptions, AlreadyReadArticle
 from .helpers import ArticleAbstract
 
 # Create your views here.
@@ -65,7 +65,8 @@ def subscribe(request, pk):
     return HttpResponseRedirect(reverse('blog_view', kwargs={'pk': pk}))
 
 def unsubscribe(request, pk):
-    Subscriptions.objects.filter(blog_id=pk, user=request.user).delete()
+    if request.user.is_authenticated:
+        Subscriptions.objects.filter(blog_id=pk, user=request.user).delete()
     return HttpResponseRedirect(reverse('blog_view', kwargs={'pk': pk}))
 
 
@@ -79,3 +80,17 @@ class NewsListView(ListView):
         queryset = super(NewsListView, self).get_queryset()
         blogs = Subscriptions.objects.filter(user=self.request.user).values('blog_id')[:10000]
         return queryset.filter(blog_id__in=blogs)
+
+
+def mark_article_as_read(request, pk):
+    try:
+        article = Article.objects.get(id=pk)
+    except Article.DoesNotExist:
+        return HttpResponse("Article does not exist")
+    if request.user.is_authenticated and bool(Subscriptions.objects.filter(blog=article.blog, user=request.user)):
+        new_already_read = AlreadyReadArticle(user=request.user, article_id=pk)
+        try:
+            new_already_read.save()
+        except Exception:
+            pass
+    return HttpResponse('Marked')
