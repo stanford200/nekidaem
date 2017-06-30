@@ -133,5 +133,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_REDIRECT_URL = '/'
+ACCOUNT_ADAPTER = 'blog.account_adapter.NoNewUsersAccountAdapter'
+ACCOUNT_USER_MODEL_EMAIL_FIELD = None
 
 SITE_ID = 1

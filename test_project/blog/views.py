@@ -79,7 +79,7 @@ class NewsListView(ListView):
     def get_queryset(self):
         queryset = super(NewsListView, self).get_queryset()
         blogs = Subscriptions.objects.filter(user=self.request.user).values('blog_id')[:10000]
-        return queryset.filter(blog_id__in=blogs)
+        return queryset.filter(blog_id__in=blogs).order_by('-creation_time')
 
 
 def mark_article_as_read(request, pk):
