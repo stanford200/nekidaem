@@ -21,7 +21,7 @@ def remove_already_read_article(sender, instance, using, **kwargs):
     AlreadyReadArticle.objects.filter(article__blog=instance.blog, user=instance.user).delete()
 
 @receiver(post_save, sender=Article)
-def create_blog_for_new_user(sender, created, instance, **kwargs):
+def send_email_when_add_article(sender, created, instance, **kwargs):
     '''
     This function should be moved to celery task.
     '''

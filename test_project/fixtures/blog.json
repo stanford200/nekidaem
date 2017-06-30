@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "name": "Blog of first user",
-      "user": 1
+      "owner": 1
     }
   }
 ]

@@ -51,5 +51,3 @@ class AlreadyReadArticle(models.Model):
 
     def __str__(self):
         return ' - '.join([self.user.email or self.user.username, self.article.name])
-
-from .signals import create_blog_for_new_user

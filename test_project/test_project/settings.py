@@ -132,8 +132,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_ADAPTER = 'blog.account_adapter.NoNewUsersAccountAdapter'
+LOGIN_REDIRECT_URL = '/blogs/'
+ACCOUNT_ADAPTER = 'blog.account_adapter.UsersAccountAdapter'
 ACCOUNT_USER_MODEL_EMAIL_FIELD = None
 
 SITE_ID = 1
