@@ -11,7 +11,7 @@ from .models import Subscriptions, Blog, AlreadyReadArticle, Article
 @receiver(post_save, sender=User)
 def create_blog_for_new_user(sender, created, instance, **kwargs):
     if created:
-        new_blog = Blog(name="Blog name", owner=instance)
+        new_blog = Blog(name="%s blog" % instance.username, owner=instance)
         new_blog.save()
         new_subscription = Subscriptions(user=instance, blog=new_blog)
         new_subscription.save()

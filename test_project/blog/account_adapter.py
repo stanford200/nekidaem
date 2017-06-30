@@ -1,7 +1,7 @@
 from allauth.account.adapter import DefaultAccountAdapter
 
 
-class NoNewUsersAccountAdapter(DefaultAccountAdapter):
+class UsersAccountAdapter(DefaultAccountAdapter):
 
     def is_open_for_signup(self, request):
         """
